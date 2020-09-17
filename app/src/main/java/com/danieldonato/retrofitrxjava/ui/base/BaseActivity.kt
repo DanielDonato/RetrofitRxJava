@@ -9,10 +9,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
+import com.danieldonato.retrofitrxjava.viewmodel.BaseViewModel
 
-abstract class BaseActivity<VM : ViewModel, B : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel<*>, B : ViewDataBinding> : AppCompatActivity() {
 
-    private lateinit var binding: B
+    protected lateinit var binding: B
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -23,8 +24,4 @@ abstract class BaseActivity<VM : ViewModel, B : ViewDataBinding> : AppCompatActi
     abstract fun getLayoutRes(): Int
 
     abstract fun getViewModel() : VM
-
-    fun getBinding() : B {
-        return binding
-    }
 }
