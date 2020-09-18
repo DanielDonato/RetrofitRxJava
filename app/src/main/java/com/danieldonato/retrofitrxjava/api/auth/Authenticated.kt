@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 open class Authenticated {
 
-    private val BASE_URL = "https://raw.githubusercontent.com/"
+    private val baseUrl = "https://raw.githubusercontent.com/"
 
     protected lateinit var retrofit: Retrofit
 
@@ -30,7 +30,7 @@ open class Authenticated {
 
     protected fun setupRetrofit() {
         retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrl)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

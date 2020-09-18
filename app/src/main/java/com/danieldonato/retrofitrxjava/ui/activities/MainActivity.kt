@@ -1,5 +1,6 @@
 package com.danieldonato.retrofitrxjava.ui.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -27,4 +28,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), MainNav
     override fun getViewModel(): MainViewModel {
         return mViewModel
     }
+
+    override fun getContext(): Context = this
+
 }
