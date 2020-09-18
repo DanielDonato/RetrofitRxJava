@@ -2,10 +2,9 @@ package com.danieldonato.retrofitrxjava.viewmodel
 
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
-import com.danieldonato.retrofitrxjava.ui.base.BaseNavigation
-import java.lang.ref.WeakReference
+import com.danieldonato.retrofitrxjava.ui.base.BaseNavigator
 
-abstract class BaseViewModel<N : BaseNavigation, B : ViewDataBinding>: ViewModel() {
+abstract class BaseViewModel<N : BaseNavigator, B : ViewDataBinding>: ViewModel() {
 
     var navigator: N
         get() = navigator

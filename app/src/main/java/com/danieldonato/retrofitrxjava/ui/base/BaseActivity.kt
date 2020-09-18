@@ -1,5 +1,7 @@
 package com.danieldonato.retrofitrxjava.ui.base
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.annotation.LayoutRes
@@ -11,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import com.danieldonato.retrofitrxjava.viewmodel.BaseViewModel
 
-abstract class BaseActivity<VM : BaseViewModel<*>, B : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel<*, *>, B : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
 
     protected lateinit var binding: B
 
@@ -24,4 +26,16 @@ abstract class BaseActivity<VM : BaseViewModel<*>, B : ViewDataBinding> : AppCom
     abstract fun getLayoutRes(): Int
 
     abstract fun getViewModel() : VM
+
+    override fun <T> openActivity(activity: Class<T>, finishActivity: Boolean, bundle: Bundle) {
+
+    }
+
+    override fun showLoadingDialog() {
+
+    }
+
+    override fun dismissLoadingDialog() {
+
+    }
 }

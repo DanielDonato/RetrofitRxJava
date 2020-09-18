@@ -1,7 +1,7 @@
 package com.danieldonato.retrofitrxjava.ui.navigators
 
-import com.danieldonato.retrofitrxjava.ui.base.BaseNavigation
+import com.danieldonato.retrofitrxjava.ui.base.BaseNavigator
 
-interface MainNavigator : BaseNavigation {
+interface MainNavigator : BaseNavigator {
 
 }

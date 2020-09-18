@@ -27,8 +27,4 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), MainNav
     override fun getViewModel(): MainViewModel {
         return mViewModel
     }
-
-    override fun <T> openActivity(activity: Class<T>, finishActivity: Boolean, bundle: Bundle) {
-
-    }
 }
