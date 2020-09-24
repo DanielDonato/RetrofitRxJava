@@ -7,5 +7,6 @@ interface BaseNavigator {
     fun <T> openActivity(activity: Class<T>, finishActivity: Boolean, bundle: Bundle)
     fun showLoadingDialog()
     fun dismissLoadingDialog()
+    fun showToast(text: String)
 
 }

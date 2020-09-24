@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -35,7 +36,9 @@ abstract class BaseActivity<VM: BaseViewModel<*, *>, B : ViewDataBinding>
     @LayoutRes
     abstract fun getLayoutRes(): Int
 
-    abstract fun getViewModel() : VM
+    override fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
 
     override fun <T> openActivity(activity: Class<T>, finishActivity: Boolean, bundle: Bundle) {
         val i = Intent(this, activity)

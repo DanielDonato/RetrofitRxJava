@@ -1,15 +1,15 @@
-package com.danieldonato.retrofitrxjava.api.auth
+package com.danieldonato.retrofitrxjava.api.retrofit
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-open class Authenticated {
-
+class RetrofitConfiguration {
     private val baseUrl = "https://raw.githubusercontent.com/"
 
-    protected lateinit var retrofit: Retrofit
+    var retrofit: Retrofit? = null
+        private set
 
     private val client =
         OkHttpClient.Builder().addInterceptor { chain ->
@@ -28,7 +28,11 @@ open class Authenticated {
             TimeUnit.MINUTES
         ).readTimeout(1, TimeUnit.MINUTES).build()
 
-    protected fun setupRetrofit() {
+    fun setupRetrofit() {
+        if(retrofit == null) {
+            //TODO verificar quantas vezes entra aqui
+            return
+        }
         retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)

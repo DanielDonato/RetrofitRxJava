@@ -21,8 +21,4 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(MainViewMo
     override fun getLayoutRes(): Int {
         return R.layout.activity_main
     }
-
-    override fun getViewModel(): MainViewModel {
-        return mViewModel
-    }
 }
