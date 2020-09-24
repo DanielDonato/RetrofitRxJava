@@ -13,7 +13,7 @@ class MainViewModel : BaseViewModel<MainNavigator, ActivityMainBinding>() {
         binding.viewModel = this
     }
 
-    fun onNextPageClick() {
-
+    fun onClickText() {
     }
+
 }

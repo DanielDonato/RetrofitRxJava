@@ -12,10 +12,17 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.get
 import com.danieldonato.retrofitrxjava.ui.dialog.LoadingDialog
 import com.danieldonato.retrofitrxjava.viewmodel.BaseViewModel
+import java.lang.ref.WeakReference
 
-abstract class BaseActivity<VM : BaseViewModel<*, *>, B : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
+abstract class BaseActivity<VM: BaseViewModel<*, *>, B : ViewDataBinding>
+    (private var classViewModel: Class<VM>): AppCompatActivity(), BaseNavigator {
+
+    val mViewModel by lazy {
+        ViewModelProvider(this).get(classViewModel)
+    }
 
     private lateinit var binding: B
     private lateinit var loadingDialog: Dialog
@@ -30,16 +37,14 @@ abstract class BaseActivity<VM : BaseViewModel<*, *>, B : ViewDataBinding> : App
 
     abstract fun getViewModel() : VM
 
-    abstract fun getContext(): Context
-
     override fun <T> openActivity(activity: Class<T>, finishActivity: Boolean, bundle: Bundle) {
-        val i = Intent(getContext(), activity)
+        val i = Intent(this, activity)
         i.putExtras(bundle)
-        getContext().startActivity(i)
+        startActivity(i)
     }
 
     override fun showLoadingDialog() {
-        loadingDialog = LoadingDialog(getContext())
+        loadingDialog = LoadingDialog(this)
         loadingDialog.show()
     }
 

@@ -1,6 +1,7 @@
 package com.danieldonato.retrofitrxjava.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -10,11 +11,7 @@ import com.danieldonato.retrofitrxjava.ui.base.BaseActivity
 import com.danieldonato.retrofitrxjava.ui.navigators.MainNavigator
 import com.danieldonato.retrofitrxjava.viewmodel.MainViewModel
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), MainNavigator {
-
-    private val mViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(MainViewModel::class.java), MainNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +25,4 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), MainNav
     override fun getViewModel(): MainViewModel {
         return mViewModel
     }
-
-    override fun getContext(): Context = this
-
 }
