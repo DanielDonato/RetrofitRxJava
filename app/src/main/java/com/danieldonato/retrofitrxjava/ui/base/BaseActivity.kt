@@ -25,12 +25,15 @@ abstract class BaseActivity<VM: BaseViewModel<*, *>, B : ViewDataBinding>
         ViewModelProvider(this).get(classViewModel)
     }
 
-    private lateinit var binding: B
-    private lateinit var loadingDialog: Dialog
+    lateinit var binding: B
+        private set
+
+    lateinit var loadingDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         binding = DataBindingUtil.setContentView(this, getLayoutRes())
+        binding.lifecycleOwner = this
     }
 
     @LayoutRes

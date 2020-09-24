@@ -14,10 +14,10 @@ class CountriesRepository {
 
     val services: CountriesService = ApiRequest().getServices(CountriesService::class.java)
 
-    fun getCountries(baseNavigatior: BaseNavigator): LiveData<List<CountryModel>> {
+    fun getCountries(baseNavigator: BaseNavigator): LiveData<List<CountryModel>> {
         val liveData = MutableLiveData<List<CountryModel>>()
         services.getCountries()
-            .enqueue(object: BaseCallbackApi<List<CountryModel>>(baseNavigatior) {
+            .enqueue(object: BaseCallbackApi<List<CountryModel>>(baseNavigator) {
                 override fun onResponse(
                     call: Call<List<CountryModel>>,
                     response: Response<List<CountryModel>>

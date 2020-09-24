@@ -5,23 +5,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class BaseCallbackApi<T>(val baseNavigatior: BaseNavigator) : Callback<T> {
+open class BaseCallbackApi<T>(val baseNavigator: BaseNavigator) : Callback<T> {
 //    private var context: Context
 
     init {
-        baseNavigatior.showLoadingDialog()
+        baseNavigator.showLoadingDialog()
     }
 
     override fun onResponse(
         call: Call<T>,
         response: Response<T>
     ) {
-        baseNavigatior.dismissLoadingDialog()
+        baseNavigator.dismissLoadingDialog()
 //        alertStatusCode(response.code())
     }
 
     override fun onFailure(call: Call<T>, t: Throwable) {
-        baseNavigatior.dismissLoadingDialog()
+        baseNavigator.dismissLoadingDialog()
 //        whenConnectTimeOut(t)
     }
 
