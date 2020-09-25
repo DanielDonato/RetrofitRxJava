@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.Window
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,7 @@ import com.danieldonato.retrofitrxjava.ui.dialog.LoadingDialog
 import com.danieldonato.retrofitrxjava.viewmodel.BaseViewModel
 import java.lang.ref.WeakReference
 
-abstract class BaseActivity<VM: BaseViewModel<*, *>, B : ViewDataBinding>
+abstract class BaseActivity<VM: BaseViewModel<*, B>, B : ViewDataBinding>
     (private var classViewModel: Class<VM>): AppCompatActivity(), BaseNavigator {
 
     val mViewModel by lazy {
@@ -26,14 +27,15 @@ abstract class BaseActivity<VM: BaseViewModel<*, *>, B : ViewDataBinding>
     }
 
     lateinit var binding: B
-        private set
+//        private set
 
     lateinit var loadingDialog: Dialog
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getLayoutRes())
         binding.lifecycleOwner = this
+        mViewModel.binding = binding
     }
 
     @LayoutRes
@@ -51,6 +53,7 @@ abstract class BaseActivity<VM: BaseViewModel<*, *>, B : ViewDataBinding>
 
     override fun showLoadingDialog() {
         loadingDialog = LoadingDialog(this)
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         loadingDialog.show()
     }
 

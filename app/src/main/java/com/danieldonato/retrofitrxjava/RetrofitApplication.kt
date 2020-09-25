@@ -5,7 +5,9 @@ import com.danieldonato.retrofitrxjava.api.retrofit.RetrofitConfiguration
 
 class RetrofitApplication : Application() {
 
-    private lateinit var retrofitConfiguration: RetrofitConfiguration //TODO mudar para modulo de injecao de dependencia
+    private val retrofitConfiguration by lazy { //TODO mudar para modulo de injecao de dependencia
+        RetrofitConfiguration()
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -17,15 +17,13 @@ class MainViewModel : BaseViewModel<MainNavigator, ActivityMainBinding>() {
         private set
 
     init {
-        binding.viewModel = this
-        getCountries()
     }
 
-    private fun getCountries() {
-        countryRepository.getCountries(navigator)
+    fun getCountries() {
+        countryRepository.getCountries(getNavigator())
             .observe(binding.lifecycleOwner!!, Observer {
                 adapter = CountryAdapter(it)
-                navigator.showCountries()
+                getNavigator().showCountries()
             })
     }
 

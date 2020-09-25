@@ -8,8 +8,7 @@ import java.util.concurrent.TimeUnit
 class RetrofitConfiguration {
     private val baseUrl = "https://raw.githubusercontent.com/"
 
-    var retrofit: Retrofit? = null
-        private set
+    fun retrofit() = setupRetrofit() //TODO mudar para singleton
 
     private val client =
         OkHttpClient.Builder().addInterceptor { chain ->
@@ -28,12 +27,12 @@ class RetrofitConfiguration {
             TimeUnit.MINUTES
         ).readTimeout(1, TimeUnit.MINUTES).build()
 
-    fun setupRetrofit() {
-        if(retrofit == null) {
-            //TODO verificar quantas vezes entra aqui
-            return
-        }
-        retrofit = Retrofit.Builder()
+    fun setupRetrofit(): Retrofit {
+//        if(retrofit != null) {
+//            //TODO verificar quantas vezes entra aqui
+//            return
+//        }
+        return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
