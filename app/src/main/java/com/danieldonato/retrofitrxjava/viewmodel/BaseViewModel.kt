@@ -7,15 +7,7 @@ import com.danieldonato.retrofitrxjava.ui.base.BaseNavigator
 
 abstract class BaseViewModel<N : BaseNavigator, B : ViewDataBinding>: ViewModel() {
 
-    private lateinit var navigator: N
-
-    fun getNavigator(): N {
-        return navigator
-    }
-
-    fun setNavigator(nav: N) {
-        navigator = nav
-    }
+    lateinit var navigator: N
 
 //
 //    var navigator: N? = null

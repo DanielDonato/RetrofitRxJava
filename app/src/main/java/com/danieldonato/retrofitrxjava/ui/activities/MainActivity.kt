@@ -17,7 +17,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(MainViewMo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel.setNavigator(this)
+        mViewModel.navigator = this
         binding.viewModel = mViewModel
         mViewModel.getCountries()
     }
