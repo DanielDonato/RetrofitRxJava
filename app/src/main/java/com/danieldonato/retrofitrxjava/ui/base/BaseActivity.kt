@@ -11,6 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
@@ -19,15 +20,14 @@ import com.danieldonato.retrofitrxjava.ui.dialog.LoadingDialog
 import com.danieldonato.retrofitrxjava.viewmodel.BaseViewModel
 import java.lang.ref.WeakReference
 
-abstract class BaseActivity<VM: BaseViewModel<*, B>, B : ViewDataBinding>
-    (private var classViewModel: Class<VM>): AppCompatActivity(), BaseNavigator {
+abstract class BaseActivity<VM: BaseViewModel<B>, B : ViewDataBinding>
+    (private var classViewModel: Class<VM>): AppCompatActivity() {
 
     val mViewModel by lazy {
         ViewModelProvider(this).get(classViewModel)
     }
 
     lateinit var binding: B
-//        private set
 
     lateinit var loadingDialog: Dialog
 
@@ -36,30 +36,28 @@ abstract class BaseActivity<VM: BaseViewModel<*, B>, B : ViewDataBinding>
         binding = DataBindingUtil.setContentView(this, getLayoutRes())
         binding.lifecycleOwner = this
         mViewModel.binding = binding
+
+        mViewModel.liveDataLoading
+            .observe(this, Observer {
+                if(it) {
+                    loadingDialog = LoadingDialog(this)
+                    loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    loadingDialog.show()
+                }else {
+                    if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
+                        loadingDialog.dismiss()
+                    }
+                }
+            })
+
+        mViewModel.liveDataOpenActivity
+            .observe(this, Observer {
+                val i = Intent(this, it)
+                startActivity(i)
+            })
+
     }
 
     @LayoutRes
     abstract fun getLayoutRes(): Int
-
-    override fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun <T> openActivity(activity: Class<T>, finishActivity: Boolean, bundle: Bundle) {
-        val i = Intent(this, activity)
-        i.putExtras(bundle)
-        startActivity(i)
-    }
-
-    override fun showLoadingDialog() {
-        loadingDialog = LoadingDialog(this)
-        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        loadingDialog.show()
-    }
-
-    override fun dismissLoadingDialog() {
-        if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
-            loadingDialog.dismiss()
-        }
-    }
 }

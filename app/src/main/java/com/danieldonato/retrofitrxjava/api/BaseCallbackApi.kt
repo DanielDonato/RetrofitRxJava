@@ -1,27 +1,28 @@
 package com.danieldonato.retrofitrxjava.api
 
-import com.danieldonato.retrofitrxjava.ui.base.BaseNavigator
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class BaseCallbackApi<T>(val baseNavigator: BaseNavigator) : Callback<T> {
+open class BaseCallbackApi<T>(private val loadingLiveData: MutableLiveData<Boolean>) : Callback<T> {
 //    private var context: Context
 
     init {
-        baseNavigator.showLoadingDialog()
+        loadingLiveData.value = true
     }
 
     override fun onResponse(
         call: Call<T>,
         response: Response<T>
     ) {
-        baseNavigator.dismissLoadingDialog()
+        loadingLiveData.value = false
 //        alertStatusCode(response.code())
     }
 
     override fun onFailure(call: Call<T>, t: Throwable) {
-        baseNavigator.dismissLoadingDialog()
+        loadingLiveData.value = false
 //        whenConnectTimeOut(t)
     }
 

@@ -6,7 +6,6 @@ import com.danieldonato.retrofitrxjava.api.BaseCallbackApi
 import com.danieldonato.retrofitrxjava.api.model.CountryModel
 import com.danieldonato.retrofitrxjava.api.request.ApiRequest
 import com.danieldonato.retrofitrxjava.api.service.CountriesService
-import com.danieldonato.retrofitrxjava.ui.base.BaseNavigator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

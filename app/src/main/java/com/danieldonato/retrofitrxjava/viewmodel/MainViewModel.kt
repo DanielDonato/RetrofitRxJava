@@ -2,6 +2,7 @@ package com.danieldonato.retrofitrxjava.viewmodel
 
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -11,12 +12,13 @@ import com.danieldonato.retrofitrxjava.databinding.ActivityMainBinding
 import com.danieldonato.retrofitrxjava.repository.CountriesRepository
 import com.danieldonato.retrofitrxjava.ui.adapters.CountryAdapter
 import com.danieldonato.retrofitrxjava.ui.base.BaseActivity
-import com.danieldonato.retrofitrxjava.ui.navigators.MainNavigator
 import retrofit2.Call
 import retrofit2.Response
 
-class MainViewModel : BaseViewModel<MainNavigator, ActivityMainBinding>() {
+class MainViewModel : BaseViewModel<ActivityMainBinding>() {
 
+    val liveDataResponseCountries = MutableLiveData<List<CountryModel>>()
+    val liveDataEmptyListCountries = MutableLiveData<Void>()
     private val countryRepository = CountriesRepository()
     lateinit var adapter: CountryAdapter
         private set
@@ -25,18 +27,19 @@ class MainViewModel : BaseViewModel<MainNavigator, ActivityMainBinding>() {
     }
 
     fun getCountries() {
-        countryRepository.getCountries(object: BaseCallbackApi<List<CountryModel>>(navigator){
+        countryRepository.getCountries(object: BaseCallbackApi<List<CountryModel>>(liveDataLoading){
             override fun onResponse(
                 call: Call<List<CountryModel>>,
                 response: Response<List<CountryModel>>
             ) {
                 super.onResponse(call, response)
-                if(!response.isSuccessful) {
-                    //TODO mostrar adapter para quando nao tiver items
+                if(!response.isSuccessful || response.body().isNullOrEmpty()) {
+                    liveDataEmptyListCountries.value = null
                     return
                 }
                 adapter = CountryAdapter(response.body()!!)
-                navigator.showCountries()
+                liveDataResponseCountries.value = response.body()
+//                navigator.showCountries()
 
             }
 

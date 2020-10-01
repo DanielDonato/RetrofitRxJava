@@ -5,6 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.danieldonato.retrofitrxjava.viewmodel.BaseViewModel
 
-public abstract class BaseFragment<VM : BaseViewModel<*, *>, B : ViewDataBinding> : Fragment() {
+public abstract class BaseFragment<VM : BaseViewModel<*>, B : ViewDataBinding> : Fragment() {
 
 }
