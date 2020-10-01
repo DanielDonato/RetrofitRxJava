@@ -39,13 +39,12 @@ class MainViewModel : BaseViewModel<ActivityMainBinding>() {
                 }
                 adapter = CountryAdapter(response.body()!!)
                 liveDataResponseCountries.value = response.body()
-//                navigator.showCountries()
 
             }
 
             override fun onFailure(call: Call<List<CountryModel>>, t: Throwable) {
                 super.onFailure(call, t)
-                //TODO mostrar adapter para quando nao tiver items
+                liveDataEmptyListCountries.value = null
             }
         })
     }

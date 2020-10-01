@@ -40,22 +40,34 @@ abstract class BaseActivity<VM: BaseViewModel<B>, B : ViewDataBinding>
         mViewModel.liveDataLoading
             .observe(this, Observer {
                 if(it) {
-                    loadingDialog = LoadingDialog(this)
-                    loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    loadingDialog.show()
+                    startLoading()
                 }else {
-                    if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
-                        loadingDialog.dismiss()
-                    }
+                    stopLoading()
                 }
             })
 
         mViewModel.liveDataOpenActivity
             .observe(this, Observer {
-                val i = Intent(this, it)
-                startActivity(i)
+                openActivity(it)
             })
 
+    }
+
+    fun startLoading() {
+        loadingDialog = LoadingDialog(this)
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        loadingDialog.show()
+    }
+
+    fun stopLoading() {
+        if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
+            loadingDialog.dismiss()
+        }
+    }
+
+    fun openActivity(activity: Class<*>) {
+        val i = Intent(this, activity)
+        startActivity(i)
     }
 
     @LayoutRes
